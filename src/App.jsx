@@ -296,15 +296,8 @@ const ContactSection = () => {
         e.preventDefault();
         
         try {
-            const templateParams = {
-                name: e.target.name.value.trim(),
-                email: e.target.email.value.trim(),
-                message: e.target.message.value.trim()
-            };
-            
-            // Try using sendForm instead of send
             await emailjs.sendForm(
-                'service_z0azdtl',
+                'service_oowkrf4',
                 'template_contact',
                 e.target,
                 '3583OdxcBw0d-ZG3N'
@@ -313,8 +306,11 @@ const ContactSection = () => {
             alert('Message sent successfully!');
             e.target.reset();
         } catch (error) {
-            console.error('Email sending failed:', error);
-            alert('Failed to send message: ' + error.message);
+            console.error('Full error object:', error);
+            console.error('Error message:', error.message);
+            console.error('Error text:', error.text);
+            console.error('Error status:', error.status);
+            alert('Failed to send message. Check console for details.');
         }
     };
 
