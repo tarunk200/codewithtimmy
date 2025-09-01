@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS
-emailjs.init('3583OdxcBw0d-ZG3N');
+// Initialize EmailJS with environment variable
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 // SVG Icon Components
 const SunIcon = () => (
@@ -130,7 +130,7 @@ const HomeSection = () => {
     const [charIndex, setCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [displayedText, setDisplayedText] = useState('');
-    const subjects = ['Java', 'Python', 'C', 'C++', 'Web Development'];
+    const subjects = useMemo(() => ['Java', 'Python', 'C', 'C++', 'Web Development'], []);
     
     useEffect(() => {
         const typingSpeed = 150;
@@ -292,30 +292,29 @@ const ContactSection = () => {
     const formRef = useScrollAnimation();
     const socialRef = useScrollAnimation();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // EMAIL LOGIC IS HERE:
-        const templateParams = {
-            from_name: e.target.name.value,
-            from_email: e.target.email.value,
-            message: e.target.message.value,
-            to_email: 'codewithtimmy@gmail.com'
-        };
-        
-        emailjs.send(
-            'service_z0azdtl',
-            'template_contact', 
-            templateParams
-        )
-        .then((response) => {
+        try {
+            const templateParams = {
+                name: e.target.name.value.trim(),
+                email: e.target.email.value.trim(),
+                message: e.target.message.value.trim()
+            };
+            
+            await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                templateParams,
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            );
+            
             alert('Message sent successfully!');
             e.target.reset();
-        })
-        .catch((error) => {
+        } catch (error) {
+            console.error('Email sending failed:', error.message);
             alert('Failed to send message. Please try again.');
-            console.error('Email error:', error);
-        });
+        }
     };
 
     return (
