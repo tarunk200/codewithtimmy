@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with environment variable
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+// Initialize EmailJS
+emailjs.init('3583OdxcBw0d-ZG3N');
 
 // SVG Icon Components
 const SunIcon = () => (
@@ -302,18 +302,19 @@ const ContactSection = () => {
                 message: e.target.message.value.trim()
             };
             
-            await emailjs.send(
-                import.meta.env.VITE_EMAILJS_SERVICE_ID,
-                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-                templateParams,
-                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            // Try using sendForm instead of send
+            await emailjs.sendForm(
+                'service_z0azdtl',
+                'template_contact',
+                e.target,
+                '3583OdxcBw0d-ZG3N'
             );
             
             alert('Message sent successfully!');
             e.target.reset();
         } catch (error) {
-            console.error('Email sending failed:', error.message);
-            alert('Failed to send message. Please try again.');
+            console.error('Email sending failed:', error);
+            alert('Failed to send message: ' + error.message);
         }
     };
 
