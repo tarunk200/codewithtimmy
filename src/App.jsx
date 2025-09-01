@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init('3583OdxcBw0d-ZG3N');
 
 // SVG Icon Components
 const SunIcon = () => (
@@ -289,7 +293,29 @@ const ContactSection = () => {
     const socialRef = useScrollAnimation();
 
     const handleSubmit = (e) => {
-        // Formspree handles the submission automatically
+        e.preventDefault();
+        
+        // EMAIL LOGIC IS HERE:
+        const templateParams = {
+            from_name: e.target.name.value,
+            from_email: e.target.email.value,
+            message: e.target.message.value,
+            to_email: 'codewithtimmy@gmail.com'
+        };
+        
+        emailjs.send(
+            'service_z0azdtl',
+            'template_contact', 
+            templateParams
+        )
+        .then((response) => {
+            alert('Message sent successfully!');
+            e.target.reset();
+        })
+        .catch((error) => {
+            alert('Failed to send message. Please try again.');
+            console.error('Email error:', error);
+        });
     };
 
     return (
@@ -299,7 +325,7 @@ const ContactSection = () => {
             <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-16">
                 <div ref={formRef} className="scroll-reveal" style={{ transitionDelay: '100ms' }}>
                     <h3 className="text-2xl font-bold mb-4">Send me a message</h3>
-                    <form action="https://formspree.io/f/xdkogkpw" method="POST" className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
                             <input type="text" name="name" id="name" required className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
