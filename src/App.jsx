@@ -163,7 +163,7 @@ const HomeSection = () => {
 
 
     return (
-        <section id="home" className="text-center min-h-screen flex flex-col justify-center items-center">
+        <section id="home" className="text-center h-screen flex flex-col justify-center items-center pt-16">
             <h1 className="text-5xl md:text-7xl font-bold mb-4 animate-fade-in-text" style={{animationDelay: '0.2s'}}>Welcome to <span className="text-indigo-600 dark:text-indigo-400">CodewithTimmy</span></h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl animate-fade-in-text" style={{animationDelay: '0.4s'}}>
                 Your one-stop destination for learning web development. From beginner tutorials to advanced courses, we have everything you need to become a coding pro.
