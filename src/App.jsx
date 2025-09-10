@@ -187,7 +187,7 @@ const AboutSection = () => {
         <section id="about" className="py-20 scroll-reveal" ref={sectionRef}>
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <img src="https://placehold.co/600x400/818cf8/ffffff?text=Timmy's+Workspace" alt="About Us" className="rounded-lg shadow-2xl" />
+                    <img src="/images/workspace_about.png" alt="Timmy's Workspace" className="rounded-full shadow-2xl w-96 h-96 object-cover" />
                 </div>
                 <div>
                     <h2 className="text-4xl font-bold mb-4">About Me</h2>
